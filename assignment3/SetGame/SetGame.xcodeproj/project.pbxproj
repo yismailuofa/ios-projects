@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8FD263A82832FCD600D797B1 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD263A72832FCD600D797B1 /* Card.swift */; };
+		8FD263AA2832FE2A00D797B1 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD263A92832FE2A00D797B1 /* CardView.swift */; };
 		8FD56B2A28320E5D0060421B /* SetGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD56B2928320E5D0060421B /* SetGameApp.swift */; };
 		8FD56B2C28320E5D0060421B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD56B2B28320E5D0060421B /* ContentView.swift */; };
 		8FD56B2E28320E620060421B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FD56B2D28320E620060421B /* Assets.xcassets */; };
@@ -14,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8FD263A72832FCD600D797B1 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		8FD263A92832FE2A00D797B1 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		8FD56B2628320E5D0060421B /* SetGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SetGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FD56B2928320E5D0060421B /* SetGameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameApp.swift; sourceTree = "<group>"; };
 		8FD56B2B28320E5D0060421B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -32,6 +36,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8FD263A42832FC9700D797B1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8FD263A72832FCD600D797B1 /* Card.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8FD263A52832FCB100D797B1 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		8FD263A62832FCBA00D797B1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8FD56B2B28320E5D0060421B /* ContentView.swift */,
+				8FD263A92832FE2A00D797B1 /* CardView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		8FD56B1D28320E5D0060421B = {
 			isa = PBXGroup;
 			children = (
@@ -51,8 +79,10 @@
 		8FD56B2828320E5D0060421B /* SetGame */ = {
 			isa = PBXGroup;
 			children = (
+				8FD263A62832FCBA00D797B1 /* Views */,
+				8FD263A52832FCB100D797B1 /* View Models */,
+				8FD263A42832FC9700D797B1 /* Models */,
 				8FD56B2928320E5D0060421B /* SetGameApp.swift */,
-				8FD56B2B28320E5D0060421B /* ContentView.swift */,
 				8FD56B2D28320E620060421B /* Assets.xcassets */,
 				8FD56B2F28320E620060421B /* Preview Content */,
 			);
@@ -138,6 +168,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FD56B2C28320E5D0060421B /* ContentView.swift in Sources */,
+				8FD263A82832FCD600D797B1 /* Card.swift in Sources */,
+				8FD263AA2832FE2A00D797B1 /* CardView.swift in Sources */,
 				8FD56B2A28320E5D0060421B /* SetGameApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

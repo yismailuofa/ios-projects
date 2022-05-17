@@ -15,36 +15,21 @@ struct CardView: View {
             RoundedRectangle(cornerRadius: 30)
                 .inset(by: 10)
                 .stroke(model.getBorderColor(), lineWidth: 5)
-            SymbolView(for: model.getSymbol())
-                .padding(20)
-                .foregroundColor(model.getSymbolColor())
+            
+            SymbolView(symbol: model.getSymbol(), color: model.getSymbolColor())
         }
         .aspectRatio(2/3, contentMode: .fit)
-        .frame(width: 150, alignment: .center)
+        .frame(width: 150)
         
-    }
-    
-    @ViewBuilder
-    private func SymbolView(for symbol: Card.Symbols) -> some View {
-        switch symbol {
-        case .oval:
-            Circle()
-            
-        case .diamond:
-            Rectangle()
-            
-        case .rectangle:
-            Rectangle()
-        }
     }
 }
 
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
-        CardView(model: CardViewModel(Card(symbol: .oval,
-                                                   count: 1,
-                                                   state: .unselected,
-                                                   color: .purple
-                                                  )))
+        CardView(model: CardViewModel(Card(symbol: .diamond,
+                                           count: 1,
+                                           state: .selected,
+                                           color: .red
+                                      )))
     }
 }

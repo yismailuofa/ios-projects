@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F40710F28345B0800B922B2 /* SymbolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F40710E28345B0800B922B2 /* SymbolView.swift */; };
 		8FD263A82832FCD600D797B1 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD263A72832FCD600D797B1 /* Card.swift */; };
 		8FD263AA2832FE2A00D797B1 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD263A92832FE2A00D797B1 /* CardView.swift */; };
 		8FD263AC2833068600D797B1 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD263AB2833068600D797B1 /* CardViewModel.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8F40710E28345B0800B922B2 /* SymbolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolView.swift; sourceTree = "<group>"; };
 		8FD263A72832FCD600D797B1 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		8FD263A92832FE2A00D797B1 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		8FD263AB2833068600D797B1 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 			children = (
 				8FD56B2B28320E5D0060421B /* ContentView.swift */,
 				8FD263A92832FE2A00D797B1 /* CardView.swift */,
+				8F40710E28345B0800B922B2 /* SymbolView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -170,6 +173,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F40710F28345B0800B922B2 /* SymbolView.swift in Sources */,
 				8FD56B2C28320E5D0060421B /* ContentView.swift in Sources */,
 				8FD263A82832FCD600D797B1 /* Card.swift in Sources */,
 				8FD263AA2832FE2A00D797B1 /* CardView.swift in Sources */,

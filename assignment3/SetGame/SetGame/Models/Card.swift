@@ -22,7 +22,14 @@ struct Card {
         case incorrectlySelected
     }
     
+    enum CardColor: String {
+        case red
+        case purple
+        case green
+    }
+    
     var symbol: Symbols
     var count: Int
-    var state: CardState 
+    var state: CardState
+    var color: CardColor
 }

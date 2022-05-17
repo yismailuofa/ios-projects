@@ -30,4 +30,21 @@ class CardViewModel: ObservableObject {
             return .blue
         }
     }
+    
+    func getSymbolColor() -> Color {
+        switch card.color {
+        case .red:
+            return .red
+            
+        case .green:
+            return .green
+            
+        case .purple:
+            return .purple
+        }
+    }
+    
+    func getSymbol() -> Card.Symbols {
+        card.symbol
+    }
 }

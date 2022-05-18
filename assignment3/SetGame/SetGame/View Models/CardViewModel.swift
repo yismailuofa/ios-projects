@@ -28,6 +28,9 @@ class CardViewModel: ObservableObject {
             
         case .selected:
             return .blue
+            
+        default:
+            return .clear
         }
     }
     
@@ -49,10 +52,10 @@ class CardViewModel: ObservableObject {
     }
     
     func getCount() -> Int {
-        card.count
+        card.count.rawValue
     }
     
-    func getShading() -> Card.CardShading {
+    func getShading() -> Card.Shading {
         card.shading
     }
 }

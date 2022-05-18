@@ -10,12 +10,24 @@ import SwiftUI
 struct SymbolView: View {
     let symbol: Card.Symbols
     let color: Color
-    let shading: Card.CardShading
+    let shading: Card.Shading
+    var frameWidth: CGFloat
+    
+    init(
+        symbol: Card.Symbols,
+        color: Color,
+        shading: Card.Shading,
+        width: CGFloat = GraphicConstants.symbolFrameWidth) {
+            frameWidth = width
+            self.symbol = symbol
+            self.color = color
+            self.shading = shading
+        }
     
     var body: some View {
         colorShape()
             .aspectRatio(GraphicConstants.symbolAspectRatio, contentMode: .fit)
-            .frame(width: GraphicConstants.symbolFrameWidth)
+            .frame(width: frameWidth)
     }
     
     @ViewBuilder

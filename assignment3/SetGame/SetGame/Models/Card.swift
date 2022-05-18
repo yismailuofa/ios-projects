@@ -8,35 +8,46 @@
 import Foundation
 import SwiftUI
 
-struct Card {
-    enum Symbols {
-        case oval
-        case diamond
-        case rectangle
+struct Card: CustomStringConvertible, Equatable {
+    var description: String {
+        "\(count) \(color) \(shading) \(symbol) \(state)"
     }
     
-    enum CardState {
+    let count: Count
+    let symbol: Symbols
+    var state: State
+    let color: Color
+    let shading: Shading
+    
+    enum Symbols: String, CaseIterable {
+        case oval = "oval"
+        case diamond = "diamond"
+        case rectangle = "rectangle"
+    }
+    
+    enum State {
         case unselected
         case selected
         case correctlySelected
         case incorrectlySelected
+        case matched
     }
     
-    enum CardColor {
-        case red
-        case purple
-        case green
+    enum Color: String, CaseIterable {
+        case red = "red"
+        case purple = "purple"
+        case green = "green"
     }
     
-    enum CardShading {
-        case hollow
-        case filled
-        case striped
+    enum Shading: String, CaseIterable {
+        case hollow = "hollow"
+        case filled = "filled"
+        case striped = "striped"
     }
     
-    private(set) var count: Int
-    private(set) var symbol: Symbols
-    private(set) var state: CardState
-    private(set) var color: CardColor
-    private(set) var shading: CardShading
+    enum Count: Int, CaseIterable {
+        case one = 1
+        case two = 2
+        case three = 3
+    }
 }

@@ -9,8 +9,7 @@ import SwiftUI
 
 struct AppView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        CardGameView(model: CardGameViewModel())
     }
 }
 

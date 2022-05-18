@@ -17,10 +17,16 @@ struct CardGameView: View {
                 Button {
                     count += 3
                 } label: {
-                    Label("Deal 3 More Cards", systemImage: "plus.rectangle.portrait")
+                    Label("Deal", systemImage: "plus.rectangle.portrait")
+                        .font(.title3)
                 }
-                Text("\(model.selectedCards.count)")
                 Spacer()
+                Button {
+                    return
+                } label: {
+                    Label("New Game", systemImage: "play.circle")
+                        .font(.title3)
+                }
             }
             .padding()
             

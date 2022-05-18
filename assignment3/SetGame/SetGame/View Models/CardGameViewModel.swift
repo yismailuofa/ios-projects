@@ -11,7 +11,7 @@ import SwiftUI
 class CardGameViewModel: ObservableObject {
     @Published private var cardGame: CardGame
     var selectedCards: [Card] {
-        cardGame.cards.filter {$0.state == .selected}
+        cardGame.cards.filter {$0.state == .selected || $0.state == .incorrectlySelected || $0.state == .correctlySelected}
     }
     
     init() {
@@ -23,7 +23,7 @@ class CardGameViewModel: ObservableObject {
     }
     
     func select(_ card: Card) {
-        let index = cardGame.cards.firstIndex(where: {$0 == card})!
+        let index = getIndex(card)
         let count = selectedCards.count
         
         switch count {
@@ -33,10 +33,31 @@ class CardGameViewModel: ObservableObject {
             if (selectedCards.contains(cardGame.cards[index])) {
                 cardGame.cards[index].state = .unselected
             } else {
+                // choose the third card
                 cardGame.cards[index].state = .selected
+                if (count == 2) {
+                    let newState: Card.State = isSet() ? .correctlySelected : .incorrectlySelected
+                    let cards = selectedCards
+                    cards.forEach() {
+                        card in
+                        let index = getIndex(card)
+                        cardGame.cards[index].state = newState
+                    }
+                }
             }
         case 3:
-            break
+            if (selectedCards.allSatisfy({$0.state == .correctlySelected})) {
+                return
+            }
+            else {
+                let cards = selectedCards
+                cards.forEach() {
+                    card in                    
+                    let index = getIndex(card)
+                    cardGame.cards[index].state = .unselected
+                }
+                cardGame.cards[index].state = .selected
+            }
         default:
             return
         }
@@ -47,10 +68,10 @@ class CardGameViewModel: ObservableObject {
             return false
         }
         let enums: [[String]] = [
-            Card.Shading.allCases.map({$0.rawValue}),
-            Card.Symbols.allCases.map({$0.rawValue}),
-            Card.Color.allCases.map({$0.rawValue}),
-            Card.Count.allCases.map({String($0.rawValue)}),
+            selectedCards.map({$0.shading.rawValue}),
+            selectedCards.map({$0.symbol.rawValue}),
+            selectedCards.map({$0.color.rawValue}),
+            selectedCards.map({String($0.count.rawValue)}),
         ]
         
         return enums.allSatisfy({uniformOrUnique($0)})
@@ -59,6 +80,10 @@ class CardGameViewModel: ObservableObject {
     private func uniformOrUnique(_ values: [String]) -> Bool {
         let set = Set(values)
         
-        return set.count == 1 || set.count == 3
+        return (set.count == 1) || (set.count == 3)
+    }
+    
+    private func getIndex(_ card: Card) -> Int {
+        return cardGame.cards.firstIndex(where: {$0 == card})!
     }
 }

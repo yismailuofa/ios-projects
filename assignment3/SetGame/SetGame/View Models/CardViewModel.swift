@@ -47,4 +47,12 @@ class CardViewModel: ObservableObject {
     func getSymbol() -> Card.Symbols {
         card.symbol
     }
+    
+    func getCount() -> Int {
+        card.count
+    }
+    
+    func getShading() -> Card.CardShading {
+        card.shading
+    }
 }

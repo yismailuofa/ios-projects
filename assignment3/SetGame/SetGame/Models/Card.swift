@@ -22,14 +22,21 @@ struct Card {
         case incorrectlySelected
     }
     
-    enum CardColor: String {
+    enum CardColor {
         case red
         case purple
         case green
     }
     
-    var symbol: Symbols
-    var count: Int
-    var state: CardState
-    var color: CardColor
+    enum CardShading {
+        case hollow
+        case filled
+        case striped
+    }
+    
+    private(set) var count: Int
+    private(set) var symbol: Symbols
+    private(set) var state: CardState
+    private(set) var color: CardColor
+    private(set) var shading: CardShading
 }

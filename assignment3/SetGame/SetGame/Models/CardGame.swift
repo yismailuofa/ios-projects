@@ -8,10 +8,30 @@
 import Foundation
 
 struct CardGame {
-    var cards: [Card]
+    var cards = Array<Card>()
+    var visibleCards = Array<Card>()
     
     init() {
-        cards = []
+        setCards()
+    }
+    
+    mutating func setCards() {
+        cards = CardGame.generateAllCards()
+        cards.shuffle()
+        
+        for _ in 0..<12 {
+            visibleCards.append(cards.popLast()!)
+        }
+    }
+    
+    mutating func dealCards() {
+        for _ in 0..<3 {
+            visibleCards.append(cards.popLast()!)
+        }
+    }
+    
+    static func generateAllCards() -> [Card] {
+        var cards = Array<Card>()
         
         for symbol in Card.Symbols.allCases {
             for color in Card.Color.allCases {
@@ -26,6 +46,6 @@ struct CardGame {
                 }
             }
         }
-        cards.shuffle()
+        return cards
     }
 }

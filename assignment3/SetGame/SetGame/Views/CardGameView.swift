@@ -9,20 +9,20 @@ import SwiftUI
 
 struct CardGameView: View {
     @ObservedObject var model: CardGameViewModel
-    @State var count = 12
     
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 2) {
                 Button {
-                    count += 3
+                    model.dealCards()
                 } label: {
                     Label("Deal", systemImage: "plus.rectangle.portrait")
                         .font(.title3)
                 }
+                .disabled(!model.canDeal())
                 Spacer()
                 Button {
-                    return
+                    model.setCards()
                 } label: {
                     Label("New Game", systemImage: "play.circle")
                         .font(.title3)
@@ -33,7 +33,7 @@ struct CardGameView: View {
             GeometryReader { geometry in
                 ScrollView {
                     LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 4)) {
-                        ForEach(model.getCards()[0..<count], id: \.description) { card in
+                        ForEach(model.getCards(), id: \.description) { card in
                             CardView(card, geometry.size.width / 4) {
                                 model.select(card)
                             }

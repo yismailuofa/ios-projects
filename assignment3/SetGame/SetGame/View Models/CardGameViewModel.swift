@@ -11,7 +11,7 @@ import SwiftUI
 class CardGameViewModel: ObservableObject {
     @Published private var cardGame: CardGame
     var selectedCards: [Card] {
-        cardGame.cards.filter {$0.state == .selected || $0.state == .incorrectlySelected || $0.state == .correctlySelected}
+        cardGame.visibleCards.filter {$0.state == .selected || $0.state == .incorrectlySelected || $0.state == .correctlySelected}
     }
     
     init() {
@@ -19,7 +19,24 @@ class CardGameViewModel: ObservableObject {
     }
     
     func getCards() -> [Card] {
-        cardGame.cards
+        cardGame.visibleCards
+    }
+    
+    func setCards() {
+        cardGame.setCards()
+    }
+    
+    func dealCards() {
+        if (!selectedCards.isEmpty && selectedCards.allSatisfy({$0.state == .correctlySelected})) {
+            select(selectedCards[0])
+        }
+        else {
+            cardGame.dealCards()
+        }
+    }
+    
+    func canDeal() -> Bool {
+        cardGame.cards.count >= 3
     }
     
     func select(_ card: Card) {
@@ -28,35 +45,49 @@ class CardGameViewModel: ObservableObject {
         
         switch count {
         case 0:
-            cardGame.cards[index].state = .selected
+            cardGame.visibleCards[index].state = .selected
         case 1, 2:
-            if (selectedCards.contains(cardGame.cards[index])) {
-                cardGame.cards[index].state = .unselected
+            if (selectedCards.contains(cardGame.visibleCards[index])) {
+                cardGame.visibleCards[index].state = .unselected
             } else {
                 // choose the third card
-                cardGame.cards[index].state = .selected
+                cardGame.visibleCards[index].state = .selected
                 if (count == 2) {
                     let newState: Card.State = isSet() ? .correctlySelected : .incorrectlySelected
                     let cards = selectedCards
                     cards.forEach() {
                         card in
                         let index = getIndex(card)
-                        cardGame.cards[index].state = newState
+                        cardGame.visibleCards[index].state = newState
                     }
                 }
             }
         case 3:
             if (selectedCards.allSatisfy({$0.state == .correctlySelected})) {
-                return
+                if (!selectedCards.contains(cardGame.visibleCards[index])) {
+                    cardGame.visibleCards[index].state = .selected
+                }
+                if (canDeal()) {
+                    let cards = selectedCards.filter({$0.state == .correctlySelected})
+                    cards.forEach() {
+                        card in
+                        let index = getIndex(card)
+                        cardGame.visibleCards[index] = cardGame.cards.popLast()!
+                    }
+                } else {
+                    cardGame.visibleCards = cardGame.visibleCards.filter({$0.state != .correctlySelected})
+                }
+                
+
             }
             else {
                 let cards = selectedCards
                 cards.forEach() {
                     card in                    
                     let index = getIndex(card)
-                    cardGame.cards[index].state = .unselected
+                    cardGame.visibleCards[index].state = .unselected
                 }
-                cardGame.cards[index].state = .selected
+                cardGame.visibleCards[index].state = .selected
             }
         default:
             return
@@ -84,6 +115,6 @@ class CardGameViewModel: ObservableObject {
     }
     
     private func getIndex(_ card: Card) -> Int {
-        return cardGame.cards.firstIndex(where: {$0 == card})!
+        return cardGame.visibleCards.firstIndex(where: {$0 == card})!
     }
 }

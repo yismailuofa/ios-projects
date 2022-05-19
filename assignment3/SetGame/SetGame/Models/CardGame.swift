@@ -19,6 +19,7 @@ struct CardGame {
         cards = CardGame.generateAllCards()
         cards.shuffle()
         
+        visibleCards.removeAll()
         for _ in 0..<12 {
             visibleCards.append(cards.popLast()!)
         }

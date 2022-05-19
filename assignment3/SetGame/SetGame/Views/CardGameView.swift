@@ -34,7 +34,7 @@ struct CardGameView: View {
                 ScrollView {
                     LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 4)) {
                         ForEach(model.getCards(), id: \.description) { card in
-                            CardView(card, geometry.size.width / 4) {
+                            CardView(card, min(geometry.size.width, geometry.size.height) / 4) {
                                 model.select(card)
                             }
                         }
@@ -51,6 +51,6 @@ struct CardGameView: View {
 struct CardGameView_Previews: PreviewProvider {
     static var previews: some View {
         CardGameView(model: CardGameViewModel())
-            .previewInterfaceOrientation(.portrait)
+            .previewInterfaceOrientation(.landscapeLeft)
     }
 }

@@ -9,21 +9,26 @@ import Foundation
 import SwiftUI
 
 class CardGameViewModel: ObservableObject {
-    @Published private var cardGame: CardGame
+    @Published private var cardGame: CardGame = CardGame()
+    
+    var visibleCards: [Card] {
+        cardGame.visibleCards
+    }
+    
+    var allCards: [Card] {
+        cardGame.allCards
+    }
+    
+    var discardedCards: [Card] {
+        cardGame.discardedCards
+    }
+    
     var selectedCards: [Card] {
         cardGame.visibleCards.filter {$0.state == .selected || $0.state == .incorrectlySelected || $0.state == .correctlySelected}
     }
     
-    init() {
-        cardGame = CardGame()
-    }
-    
-    func getCards() -> [Card] {
-        cardGame.visibleCards
-    }
-    
-    func setCards() {
-        cardGame.setCards()
+    func reset() {
+        cardGame.reset()
     }
     
     func dealCards() {
@@ -36,7 +41,7 @@ class CardGameViewModel: ObservableObject {
     }
     
     func canDeal() -> Bool {
-        cardGame.cards.count >= 3
+        allCards.count >= 3
     }
     
     func select(_ card: Card) {
@@ -67,18 +72,10 @@ class CardGameViewModel: ObservableObject {
                 if (!selectedCards.contains(cardGame.visibleCards[index])) {
                     cardGame.visibleCards[index].state = .selected
                 }
-                if (canDeal()) {
-                    let cards = selectedCards.filter({$0.state == .correctlySelected})
-                    cards.forEach() {
-                        card in
-                        let index = getIndex(card)
-                        cardGame.visibleCards[index] = cardGame.cards.popLast()!
-                    }
-                } else {
+                
+                withAnimation(.easeInOut(duration: GraphicConstants.selectAnimationDuration)) {
                     cardGame.visibleCards = cardGame.visibleCards.filter({$0.state != .correctlySelected})
                 }
-                
-
             }
             else {
                 let cards = selectedCards

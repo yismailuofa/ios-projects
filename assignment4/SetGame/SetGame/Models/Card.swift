@@ -8,11 +8,8 @@
 import Foundation
 import SwiftUI
 
-struct Card: CustomStringConvertible, Equatable {
-    var description: String {
-        "\(count) \(color) \(shading) \(symbol) \(state)"
-    }
-    
+struct Card:Equatable, Hashable, Identifiable {
+    let id = UUID()
     let count: Count
     let symbol: Symbols
     var state: State

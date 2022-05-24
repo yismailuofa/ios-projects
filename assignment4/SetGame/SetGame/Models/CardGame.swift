@@ -8,26 +8,28 @@
 import Foundation
 
 struct CardGame {
-    var cards = Array<Card>()
+    var allCards = Array<Card>()
     var visibleCards = Array<Card>()
+    var discardedCards = Array<Card>()
     
     init() {
-        setCards()
+        reset()
     }
     
-    mutating func setCards() {
-        cards = CardGame.generateAllCards()
-        cards.shuffle()
+    mutating func reset() {
+        allCards = CardGame.generateAllCards()
         
         visibleCards.removeAll()
+        discardedCards.removeAll()
+        
         for _ in 0..<12 {
-            visibleCards.append(cards.popLast()!)
+            visibleCards.append(allCards.popLast()!)
         }
     }
     
     mutating func dealCards() {
         for _ in 0..<3 {
-            visibleCards.append(cards.popLast()!)
+            visibleCards.append(allCards.popLast()!)
         }
     }
     
@@ -47,6 +49,8 @@ struct CardGame {
                 }
             }
         }
+//        cards.shuffle()
+        
         return cards
     }
 }

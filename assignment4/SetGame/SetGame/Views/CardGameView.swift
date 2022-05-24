@@ -22,28 +22,38 @@ struct CardGameView: View {
                 .disabled(!model.canDeal())
                 Spacer()
                 Button {
-                    model.setCards()
+                    withAnimation(.easeInOut(duration: GraphicConstants.selectAnimationDuration)) {
+                        model.reset()
+                    }
                 } label: {
                     Label("New Game", systemImage: "play.circle")
                         .font(.title3)
                 }
             }
-            .padding()
+            .padding(.horizontal)
             
             GeometryReader { geometry in
                 ScrollView {
                     LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 4)) {
-                        ForEach(model.getCards(), id: \.description) { card in
-                            CardView(card, min(geometry.size.width, geometry.size.height) / 4) {
-                                model.select(card)
-                            }
+                        ForEach(model.visibleCards) { card in
+                            CardView(card: card, frameWidth: min(geometry.size.width, geometry.size.height) / 4.3)
+                                .onTapGesture {
+                                    model.select(card)
+                                }
                         }
                     }
                     .padding(.horizontal, 10)
                 }
             }
             .padding(.bottom,1)
+            HStack {
+                Text("Deck")
+                Spacer()
+                Text("Discard")
+            }
+            .padding(10)
         }
+        
     }
     
 }
@@ -51,6 +61,5 @@ struct CardGameView: View {
 struct CardGameView_Previews: PreviewProvider {
     static var previews: some View {
         CardGameView(model: CardGameViewModel())
-            .previewInterfaceOrientation(.landscapeLeft)
     }
 }

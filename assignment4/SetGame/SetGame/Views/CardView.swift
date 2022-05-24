@@ -8,27 +8,22 @@
 import SwiftUI
 
 struct CardView: View {
-    @ObservedObject var model: CardViewModel
+    var card: Card
     var frameWidth: CGFloat
-    var onTap: () -> Void
-    
-    init(_ card: Card, _ width: CGFloat = GraphicConstants.cardFrameWidth, handleOnTap: @escaping () -> Void) {
-        model = CardViewModel(card)
-        frameWidth = width
-        onTap = handleOnTap
-    }
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: frameWidth / 4)
                 .inset(by: GraphicConstants.cardInset)
-                .stroke(model.getBorderColor(),
+                .stroke(getBorderColor(card.state),
                         lineWidth: frameWidth * 0.05)
+                .animation(.easeInOut(duration: GraphicConstants.selectAnimationDuration), value: card.state)
+            
             VStack {
-                ForEach(0..<model.getCount(), id: \.self) {_ in
-                    SymbolView(symbol: model.getSymbol(),
-                               color: model.getSymbolColor(),
-                               shading: model.getShading(),
+                ForEach(0..<card.count.rawValue, id: \.self) {_ in
+                    SymbolView(symbol: card.symbol,
+                               color: getSymbolColor(card.color),
+                               shading: card.shading,
                                width: frameWidth / 2
                                
                     )
@@ -37,8 +32,37 @@ struct CardView: View {
         }
         .aspectRatio(GraphicConstants.cardAspectRatio, contentMode: .fit)
         .frame(width: frameWidth)
-        .onTapGesture{
-            onTap()
+    }
+    
+    private func getBorderColor(_ state: Card.State) -> Color {
+        switch state {
+        case .unselected:
+            return .gray
+            
+        case .correctlySelected:
+            return .green
+            
+        case .incorrectlySelected:
+            return .red
+            
+        case .selected:
+            return .blue
+            
+        default:
+            return .clear
+        }
+    }
+    
+    private func getSymbolColor(_ color: Card.Color) -> Color {
+        switch color {
+        case .red:
+            return .red
+            
+        case .green:
+            return .green
+            
+        case .purple:
+            return .purple
         }
     }
 }
@@ -46,13 +70,14 @@ struct CardView: View {
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            CardView(Card(count: .two,
-                          symbol: .diamond,
-                          state: .unselected,
-                          color: .green,
-                          shading: .hollow
-                         ),
-                     handleOnTap: {}
+            CardView(
+                card: Card(count: .two,
+                           symbol: .diamond,
+                           state: .unselected,
+                           color: .green,
+                           shading: .hollow
+                          ),
+                frameWidth: 90
             )
         }
     }

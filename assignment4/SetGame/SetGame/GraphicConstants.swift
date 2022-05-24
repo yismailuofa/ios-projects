@@ -21,5 +21,5 @@ struct GraphicConstants {
 
     static let ovalSymbolCornerRadius: CGFloat = 40
     
-    
+    static let selectAnimationDuration: CGFloat = 0.4
 }

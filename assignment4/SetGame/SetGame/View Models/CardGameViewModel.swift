@@ -35,7 +35,7 @@ class CardGameViewModel: ObservableObject {
         if (!selectedCards.isEmpty && selectedCards.allSatisfy({$0.state == .correctlySelected})) {
             select(selectedCards[0])
         }
-        else {
+        withAnimation(.easeInOut(duration: GraphicConstants.selectAnimationDuration)) {
             cardGame.dealCards()
         }
     }
@@ -74,6 +74,7 @@ class CardGameViewModel: ObservableObject {
                 }
                 
                 withAnimation(.easeInOut(duration: GraphicConstants.selectAnimationDuration)) {
+                    cardGame.discardedCards.append(contentsOf: cardGame.visibleCards.filter({$0.state == .correctlySelected}))
                     cardGame.visibleCards = cardGame.visibleCards.filter({$0.state != .correctlySelected})
                 }
             }

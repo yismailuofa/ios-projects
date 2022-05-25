@@ -10,25 +10,37 @@ import SwiftUI
 struct CardView: View {
     var card: Card
     var frameWidth: CGFloat
+    var isFaceUp: Bool = true
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: frameWidth / 4)
-                .inset(by: GraphicConstants.cardInset)
-                .stroke(getBorderColor(card.state),
-                        lineWidth: frameWidth * 0.05)
-                .animation(.easeInOut(duration: GraphicConstants.selectAnimationDuration), value: card.state)
-            
-            VStack {
-                ForEach(0..<card.count.rawValue, id: \.self) {_ in
-                    SymbolView(symbol: card.symbol,
-                               color: getSymbolColor(card.color),
-                               shading: card.shading,
-                               width: frameWidth / 2
-                               
-                    )
+            if isFaceUp {
+                Group {
+                    RoundedRectangle(cornerRadius: frameWidth / 4)
+                        .inset(by: GraphicConstants.cardInset)
+                        .strokeBorder(getBorderColor(card.state),
+                                lineWidth: frameWidth * 0.05)
+                        .background(.white)
+                        .animation(.easeInOut(duration: GraphicConstants.selectAnimationDuration), value: card.state)
+                    VStack {
+                        ForEach(0..<card.count.rawValue, id: \.self) {_ in
+                            SymbolView(symbol: card.symbol,
+                                       color: getSymbolColor(card.color),
+                                       shading: card.shading,
+                                       width: frameWidth / 2
+                                       
+                            )
+                        }
+                    }
                 }
+
             }
+            else {
+                RoundedRectangle(cornerRadius: frameWidth / 4)
+                    .inset(by: GraphicConstants.cardInset)
+                    .fill(.gray)
+            }
+
         }
         .aspectRatio(GraphicConstants.cardAspectRatio, contentMode: .fit)
         .frame(width: frameWidth)
@@ -66,19 +78,19 @@ struct CardView: View {
         }
     }
 }
-
-struct CardView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            CardView(
-                card: Card(count: .two,
-                           symbol: .diamond,
-                           state: .unselected,
-                           color: .green,
-                           shading: .hollow
-                          ),
-                frameWidth: 90
-            )
-        }
-    }
-}
+//
+//struct CardView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//            CardView(
+//                card: Card(count: .two,
+//                           symbol: .diamond,
+//                           state: .unselected,
+//                           color: .green,
+//                           shading: .hollow
+//                          ),
+//                frameWidth: 90
+//            )
+//        }
+//    }
+//}

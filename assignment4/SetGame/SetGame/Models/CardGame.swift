@@ -49,7 +49,7 @@ struct CardGame {
                 }
             }
         }
-//        cards.shuffle()
+        cards.shuffle()
         
         return cards
     }

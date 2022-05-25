@@ -15,13 +15,16 @@ struct CardView: View {
     var body: some View {
         ZStack {
             if isFaceUp {
-                Group {
+                ZStack {
+                    RoundedRectangle(cornerRadius: frameWidth / 4)
+                        .inset(by: GraphicConstants.cardInset)
+                        .fill(.white)
                     RoundedRectangle(cornerRadius: frameWidth / 4)
                         .inset(by: GraphicConstants.cardInset)
                         .strokeBorder(getBorderColor(card.state),
                                 lineWidth: frameWidth * 0.05)
-                        .background(.white)
                         .animation(.easeInOut(duration: GraphicConstants.selectAnimationDuration), value: card.state)
+                }
                     VStack {
                         ForEach(0..<card.count.rawValue, id: \.self) {_ in
                             SymbolView(symbol: card.symbol,
@@ -32,7 +35,7 @@ struct CardView: View {
                             )
                         }
                     }
-                }
+                
 
             }
             else {

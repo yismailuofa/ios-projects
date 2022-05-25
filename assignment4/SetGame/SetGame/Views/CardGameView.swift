@@ -80,5 +80,6 @@ struct CardGameView: View {
 struct CardGameView_Previews: PreviewProvider {
     static var previews: some View {
         CardGameView(model: CardGameViewModel())
+            .preferredColorScheme(.light)
     }
 }

@@ -64,6 +64,7 @@ struct EmojiArtDocumentView: View {
                             }
                         }
                         .scaleEffect(zoomScale)
+                        .scaleEffect(selectedEmoji.contains(emoji) ? emojiGestureZoomScale : 1)
                         .position(position(for: emoji, in: geometry))
                         .gesture(panSelectedEmojiGesture())
                     }
@@ -160,13 +161,29 @@ struct EmojiArtDocumentView: View {
         steadyStateZoomScale * gestureZoomScale
     }
     
+    @GestureState private var emojiGestureZoomScale: CGFloat = 1
+    
     private func zoomGesture() -> some Gesture {
         MagnificationGesture()
             .updating($gestureZoomScale) { latestGestureScale, gestureZoomScale, _ in
-                gestureZoomScale = latestGestureScale
+                if (selectedEmoji.isEmpty) {
+                    gestureZoomScale = latestGestureScale
+                }
+            }
+            .updating($emojiGestureZoomScale) { latestGestureScale, emojiGestureZoomScale, _ in
+                if (!selectedEmoji.isEmpty) {
+                    emojiGestureZoomScale = latestGestureScale
+                }
             }
             .onEnded { gestureScaleAtEnd in
-                steadyStateZoomScale *= gestureScaleAtEnd
+                if (selectedEmoji.isEmpty) {
+                    steadyStateZoomScale *= gestureScaleAtEnd
+                } else {
+                    selectedEmoji.forEach { emoji in
+                        document.scaleEmoji(emoji, by: gestureScaleAtEnd)
+                    }
+                    selectedEmoji.removeAll()
+                }
             }
     }
     

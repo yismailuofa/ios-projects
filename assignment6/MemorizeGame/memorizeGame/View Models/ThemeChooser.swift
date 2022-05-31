@@ -16,7 +16,7 @@ class ThemeChooser: ObservableObject {
             let newThemes = themes.difference(from: oldValue)
              
             oldThemes.forEach { theme in
-                themeToGame[theme] = nil                
+                themeToGame[theme] = nil
             }
             newThemes.forEach { theme in
                 themeToGame[theme] = EmojiMemoryGame(theme: theme)
@@ -40,7 +40,7 @@ class ThemeChooser: ObservableObject {
     }
     
     init() {
-//        restoreFromUserDefaults()
+        restoreFromUserDefaults()
         
         if (themes.isEmpty) {
             insertTheme(named: "Sports", emojis: "🏈⚾️🏀⚽️🎾🏐🥏🏓⛳️🥅🥌🏂⛷🎳".map({String($0)}), numberOfPairs: 8, color: RGBAColor(color: Color(uiColor: .orange)))

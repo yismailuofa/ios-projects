@@ -21,7 +21,7 @@ struct AppView: View {
                     ThemeEditor(for: $themeChooser.themes[theme])
                 }
                 .sheet(isPresented: $managing) {
-                    ThemeManager()
+                    ThemeManager(chosenThemeIndex: $chosenThemeIndex)
                 }
         }
     }

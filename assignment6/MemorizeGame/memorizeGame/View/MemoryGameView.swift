@@ -13,10 +13,16 @@ struct MemoryGameView: View {
     var body: some View {
         VStack {
             HStack(alignment: .center ) {
+                Button {
+                    viewModel.restart()
+                }
+                label: {
+                    Label("New Game", systemImage: "play.circle")
+                }
                 Spacer()
                 Text("Score: \(viewModel.getScore())")
             }
-            .padding(.horizontal)
+            .padding()
             
             Text(viewModel.getThemeName())
                 .font(.largeTitle)

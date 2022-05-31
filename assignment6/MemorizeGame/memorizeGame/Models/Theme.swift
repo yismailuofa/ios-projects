@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Theme: Codable {
-    private(set) var name: String
-    private(set) var emojis: [String]
-    private(set) var numberOfPairs: Int
-    private(set) var color: RGBAColor
+struct Theme: Codable, Hashable, Identifiable {
+    var name: String
+    var emojis: [String]
+    var numberOfPairs: Int
+    var color: RGBAColor
     var id: Int
 }

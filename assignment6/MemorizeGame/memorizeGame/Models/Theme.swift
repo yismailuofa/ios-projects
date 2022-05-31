@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct Theme<CardContent> {
+struct Theme: Codable {
     private(set) var name: String
-    private(set) var emojis: [CardContent]
+    private(set) var emojis: [String]
     private(set) var numberOfPairs: Int
-    private(set) var color: Color
+    private(set) var color: RGBAColor
+    var id: Int
 }

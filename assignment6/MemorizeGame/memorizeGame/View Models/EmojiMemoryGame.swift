@@ -8,19 +8,10 @@
 import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
-    static let themes: [Theme] = [
-        Theme(name: "Mammals", emojis: ["🐱","🐭","🐶"], numberOfPairs: 4, color: "green"),
-        Theme(name: "Ocean", emojis: ["🐠","🐡","🦀"], numberOfPairs: 1, color: "blue"),
-        Theme(name: "Bugs", emojis: ["🦟","🐜","🐞"], numberOfPairs: 4, color: "yellow"),
-        Theme(name: "Vehicles", emojis: ["🛻","🏍","🚎"], numberOfPairs: 2, color: "orange"),
-        Theme(name: "Hearts", emojis: ["💚","❤️‍🩹","❤️"], numberOfPairs: 2, color: "red"),
-        Theme(name: "Sports", emojis: ["🏀","⚽️","🏈"], numberOfPairs: 3, color: "purple"),
-    ]
+    @Published private var theme: Theme
+    @Published private var model: MemoryGame
     
-    @Published private var theme: Theme<String>
-    @Published private var model: MemoryGame<String>
-    
-    var cards: Array<MemoryGame<String>.Card> {
+    var cards: Array<MemoryGame.Card> {
         model.cards
     }
     
@@ -29,26 +20,26 @@ class EmojiMemoryGame: ObservableObject {
         model = EmojiMemoryGame.createMemoryGame(theme: theme)
     }
     
-    static func createMemoryGame(theme: Theme<String>) -> MemoryGame<String> {
+    static func createMemoryGame(theme: Theme) -> MemoryGame {
         let clampedNumberOfPairs = min(theme.numberOfPairs, theme.emojis.count)
         
         let emojis = theme.emojis.shuffled()
         
-        return MemoryGame<String>(numberOfPairs: clampedNumberOfPairs) {
+        return MemoryGame(numberOfPairs: clampedNumberOfPairs) {
             i in emojis[i]
         }
     }
     
-    func choose(_ card: MemoryGame<String>.Card) {
+    func choose(_ card: MemoryGame.Card) {
         if (model.flip(card)) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                 self.model.choose(card)
             }
         }
     }
     
     func getThemeForegroundColor() -> Color {
-        theme.color
+        return Color(rgbaColor: theme.color)
     }
     
     func getThemeName() -> String {
@@ -60,3 +51,29 @@ class EmojiMemoryGame: ObservableObject {
     }
 }
 
+struct RGBAColor: Codable, Equatable, Hashable {
+     let red: Double
+     let green: Double
+     let blue: Double
+     let alpha: Double
+}
+
+extension Color {
+     init(rgbaColor rgba: RGBAColor) {
+     self.init(.sRGB, red: rgba.red, green: rgba.green, blue: rgba.blue, opacity: rgba.alpha)
+     }
+}
+
+extension RGBAColor {
+     init(color: Color) {
+     var red: CGFloat = 0
+     var green: CGFloat = 0
+     var blue: CGFloat = 0
+     var alpha: CGFloat = 0
+     if let cgColor = color.cgColor {
+     UIColor(cgColor: cgColor).getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+     }
+         
+     self.init(red: Double(red), green: Double(green), blue: Double(blue), alpha: Double(alpha))
+     }
+}

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MemoryGame<CardContent> where CardContent: Equatable {
+struct MemoryGame {
     private(set) var cards: Array<Card>
     private(set) var score: Int = 0
     private var faceUpIndex: Int?
@@ -46,7 +46,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
     
-    init(numberOfPairs: Int, createCardContent: (Int) -> CardContent) {
+    init(numberOfPairs: Int, createCardContent: (Int) -> String) {
         cards = Array<Card>()
         
         for i in 0..<numberOfPairs {
@@ -62,7 +62,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var isFaceUp: Bool = false
         var isMatched: Bool = false
         var isSeen: Bool = false
-        var content: CardContent
+        var content: String
         var id: Int
     }
 }
